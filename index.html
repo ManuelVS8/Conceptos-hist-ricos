@@ -1,164 +1,388 @@
 <!DOCTYPE html>
-<html lang="en" translate="no" class="notranslate">
+<html lang="en" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="google" content="notranslate">
-    <title>History Concepts</title>
+    <title>Basic Concepts to Study the Past</title>
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/ManuelVS8/Audios-juegos-SCIENCE/refs/heads/main/icono.ico">
     <style>
-        *{box-sizing:border-box;margin:0;padding:0}
-        :root{--blue:#001DFF;--blue-dark:#04032B;--blue-700:#1a3a5f;--blue-600:#254fba;--orange:#f59e42;--orange-700:#e67e22;--bg-grad-1:#1a3a5f;--bg-grad-2:#0d2340;--white:#fff;--green:#2ecc71;--red:#e74c3c;--panel:#E8EAFF;--card-base:#3498db;--card-selected:#f1c40f}
-        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,var(--bg-grad-1) 0%,var(--bg-grad-2) 100%);min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:20px 12px;color:#333}
-        .game-container{background:var(--white);border-radius:16px;box-shadow:0 12px 24px rgba(0,0,0,.12);padding:1.2rem;max-width:980px;width:100%;min-height:640px;position:relative;overflow:hidden;display:flex;flex-direction:column;margin-bottom:2rem}
-        header{text-align:center;margin-bottom:.4rem;margin-top:3.2rem}
-        h1{color:var(--blue-dark);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;letter-spacing:.5px}
-        .subtitle{color:var(--blue-700);font-size:clamp(.9rem,2.8vw,1.1rem);margin-top:.2rem}
-        .highlight-keyword{color:var(--orange);font-weight:800}
-        .btn{color:#fff;border:none;padding:.75rem 1.2rem;border-radius:10px;cursor:pointer;font-weight:800;transition:transform .08s ease,box-shadow .2s ease,background-color .25s ease;min-width:120px;height:48px;display:inline-flex;align-items:center;justify-content:center;font-size:.95rem}
-        .btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.12)}
-        .btn:active{transform:translateY(0)}
-        .btn-primary{background:var(--orange)}.btn-primary:hover{background:var(--orange-700)}
-        .btn-ghost{background:#e6f2ff;color:var(--blue-700)}
-        .screen{display:none;animation:fadeIn .35s ease;flex-direction:column;flex:1}
-        .screen.active{display:flex}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-        .game-info{display:flex;gap:.6rem;align-items:center;justify-content:space-between;margin:.3rem 0 .5rem;flex-wrap:wrap}
-        .timer{font-weight:900;color:var(--blue-700);font-size:clamp(.9rem,2.2vw,1.1rem)}
-        .progress-bar{flex:1;height:10px;background:#e6f2ff;border-radius:999px;overflow:hidden}
-        .progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--orange) 0%,var(--orange-700) 100%);transition:width .3s ease}
-        .level-indicator{font-weight:700;color:var(--blue-700);font-size:.85rem;background:#e6f2ff;padding:4px 10px;border-radius:20px}
-        .top-controls{position:absolute;top:.8rem;right:1rem;display:flex;align-items:center;gap:8px;z-index:20}
-        .lang-pill{display:flex;align-items:center;background:#fff;border-radius:999px;padding:3px;gap:3px;box-shadow:0 2px 8px rgba(0,0,0,0.12);border:1px solid #e0e0e0}
-        .lang-pill button{width:34px;height:34px;border-radius:50%;border:none;font-size:1.15rem;cursor:pointer;display:flex;align-items:center;justify-content:center;background:transparent;transition:background .2s,opacity .2s,transform .15s}
-        .lang-pill button.active-lang{background:var(--blue-600);transform:scale(1.08)}
-        .lang-pill button:not(.active-lang){opacity:.5}
-        .lang-pill button:hover:not(.active-lang){opacity:.8;transform:scale(1.05)}
-        .mute-btn{background:linear-gradient(135deg,var(--orange),var(--orange-700));color:#fff;border:2px solid #fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;z-index:20;transition:transform .2s,box-shadow .2s}
-        .mute-btn:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(245,158,66,.4)}
-        .mute-btn.muted{background:linear-gradient(135deg,#999,#777)}
-        .mute-btn svg{width:20px;height:20px;pointer-events:none}
-        .start-content{display:flex;flex-direction:column;justify-content:center;align-items:center;flex:1;gap:1rem;padding:1rem}
-        .advice-box{background:var(--panel);border-left:4px solid var(--blue-700);padding:1rem 1.2rem;border-radius:12px;color:var(--blue-700);max-width:760px;text-align:center;font-size:clamp(.95rem,2.8vw,1.1rem);line-height:1.6}
-        .start-image{max-width:260px;width:100%;margin:0 auto}
-        .results{display:flex;flex-direction:column;align-items:center;gap:.6rem;text-align:center;flex:1;justify-content:center}
-        .final-title{color:var(--blue-dark);font-weight:900}
-        .big-score{font-size:clamp(2.2rem,6vw,3.4rem);color:var(--blue-600);font-weight:900}
-        .score-title{font-size:1rem;color:var(--blue-700);margin-top:1rem}
-        .final-time{color:var(--blue-700)}
-        #trophyBox{display:none;font-size:clamp(4rem,10vw,7rem);margin:.5rem 0;text-align:center;align-self:center;animation:bounce 1s ease infinite;color:var(--orange);line-height:1}
-        @keyframes bounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-15px) scale(1.1)}}
-        .credit{color:var(--blue-700);margin-top:1rem;font-size:.9rem}
-        #finalMsg{font-size:clamp(1.1rem,3.8vw,1.6rem);font-weight:800;color:var(--blue-700);margin-top:.6rem}
-        .school-logo{display:block;width:140px;max-width:25%;height:auto;margin-top:.8rem;border-radius:8px;object-fit:contain}
+        /* ====== Reset & base ====== */
+        * { box-sizing: border-box; margin:0; padding:0; }
+        :root{
+            --blue:#001DFF;
+            --blue-dark:#04032B;
+            --blue-700:#1a3a5f;
+            --blue-600:#254fba;
+            --orange:#f59e42;
+            --orange-700:#e67e22;
+            --bg-grad-1:#1a3a5f;
+            --bg-grad-2:#0d2340;
+            --white:#ffffff;
+            --green:#2ecc71;
+            --red:#e74c3c;
+            --panel:#E8EAFF;
+            --card-base:#3498db;
+            --card-selected:#f1c40f;
+            --pastel-red:#f4a6a0;
+            --pastel-green:#a8e6cf;
+            --pastel-yellow:#ffe066;
+        }
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+            min-height:100vh; 
+            display:flex; 
+            justify-content:center; 
+            align-items: flex-start; 
+            padding: 20px 12px;
+            color:#333; 
+        }
+        .game-container{
+            background:var(--white); border-radius:16px; box-shadow:0 12px 24px rgba(0,0,0,.12);
+            padding:1.2rem; max-width:980px; width:100%; min-height:640px; position:relative; overflow:hidden;
+            display:flex; flex-direction:column;
+            margin-bottom: 2rem; 
+        }
+        header{ text-align:center; margin-bottom:.8rem; margin-top:3.2rem; }
+        h1{ color:var(--blue-dark); font-size:clamp(1.8rem,5.2vw,3.1rem); font-weight:900; letter-spacing:.5px; }
+        .subtitle{ color:var(--blue-700); font-size:clamp(1rem,3.5vw,1.25rem); margin-top:.25rem; }
+        .highlight-keyword{ color:var(--orange); font-weight:800; }
 
-        /* --- UNIFIED GAME CARDS --- */
-        .g-card{background-color:var(--card-base);color:#fff;border:4px solid transparent;border-radius:10px;padding:12px 10px;min-height:80px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:clamp(.82rem,1.9vw,.95rem);text-align:center;cursor:pointer;transition:all .2s ease;user-select:none;line-height:1.3}
-        .g-card:hover:not(.matched):not(.selected):not(.eliminated){transform:scale(1.02);box-shadow:0 4px 8px rgba(0,0,0,.2)}
-        .g-card.selected{background-color:var(--card-selected);color:#fff;animation:pulse 1s infinite}
-        .g-card.matched{background-color:var(--green);color:#fff;cursor:default;box-shadow:0 3px 10px rgba(46,204,113,.35);transform:scale(1)}
-        .g-card.flash-error{animation:shake .3s ease-in-out;background-color:var(--red);border-color:var(--red)}
-        .g-card.eliminated{opacity:0;transform:scale(.7);pointer-events:none;transition:all .35s ease}
-        .g-card.correct-reveal{background-color:var(--green);animation:pulseOk .6s ease}
-        @keyframes pulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(241,196,15,.7)}70%{transform:scale(1.02);box-shadow:0 0 0 10px rgba(241,196,15,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(241,196,15,0)}}
-        @keyframes shake{0%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}100%{transform:translateX(0)}}
-        @keyframes pulseOk{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+        .btn{ color:#fff; border:none; padding:.75rem 1.2rem; border-radius:10px; cursor:pointer; font-weight:800;
+            transition:transform .08s ease, box-shadow .2s ease, background-color .25s ease; min-width:140px; height:48px;
+            display:inline-flex; align-items:center; justify-content:center; font-size: 1rem; }
+        .btn:hover{ transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,.12); }
+        .btn:active{ transform:translateY(0); }
+        .btn-primary{ background:var(--orange); }
+        .btn-primary:hover{ background:var(--orange-700); }
+        .btn-blue{ background:var(--blue-600); }
+        .btn-blue:hover{ filter:brightness(.9); }
+        .btn-ghost{ background:#e6f2ff; color:var(--blue-700); }
+        .btn-green{ background:var(--green); }
+        .btn-green:hover{ filter:brightness(.9); }
+        .btn-red{ background:var(--red); }
+        .btn-red:hover{ filter:brightness(.9); }
 
-        /* GAME 1: ELIMINATION */
-        .g1-def-box{background:linear-gradient(135deg,#fef9c3,#fef3c7);border:3px solid #f59e0b;border-radius:16px;padding:1.5rem 1.2rem;text-align:center;font-weight:700;font-size:clamp(1rem,2.8vw,1.2rem);color:#78350f;line-height:1.55;margin:0 auto;width:100%;max-width:600px;box-shadow:0 4px 16px rgba(245,158,11,.15);flex-shrink:0}
-        .g1-options{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:780px;margin-top:1rem}
-        @media(max-width:600px){.g1-options{grid-template-columns:repeat(2,1fr)}}
+        .screen{ display:none; animation:fadeIn .35s ease; flex-direction:column; flex:1; }
+        .screen.active{ display:flex; }
+        @keyframes fadeIn{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
 
-        /* GAME 2: COLUMN MATCH */
-        .g2-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:820px;margin:0 auto;flex:1;align-content:start;padding:.3rem}
-        .g2-col{display:flex;flex-direction:column;gap:10px}
+        .game-info{ display:flex; gap:.6rem; align-items:center; justify-content:space-between; margin:.4rem 0 1rem; flex-wrap:wrap; }
+        .timer{ font-weight:900; color:var(--blue-700); font-size:clamp(.95rem,2.3vw,1.15rem); }
+        .progress-bar{ flex:1; height:10px; background:#e6f2ff; border-radius:999px; overflow:hidden; }
+        .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--orange) 0%, var(--orange-700) 100%); transition:width .3s ease; }
+        .level-indicator{ font-weight:700; color: var(--blue-700); font-size: 0.9rem; background: #e6f2ff; padding: 4px 10px; border-radius: 20px; }
 
-        /* GAME 3: GRID MATCH */
-        .g3-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:820px;margin:0 auto;flex:1;align-content:start;padding:.3rem}
-        @media(max-width:600px){.g3-grid{grid-template-columns:repeat(3,1fr)}}
+        /* ====== Top Controls ====== */
+        .top-controls{
+            position: absolute; top: .8rem; right: 1rem; display: flex; align-items: center; gap: 8px; z-index: 20;
+        }
+        .lang-pill{
+            display: flex; align-items: center; background: #fff; border-radius: 999px; padding: 3px; gap: 3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12); border: 1px solid #e0e0e0;
+        }
+        .lang-pill button{
+            width: 34px; height: 34px; border-radius: 50%; border: none; font-size: 1.15rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; background: transparent;
+            transition: background .2s, opacity .2s, transform .15s;
+        }
+        .lang-pill button.active-lang{
+            background: var(--blue-600); transform: scale(1.08);
+        }
+        .lang-pill button:not(.active-lang){
+            opacity: 0.5;
+        }
+        .lang-pill button:hover:not(.active-lang){
+            opacity: 0.8; transform: scale(1.05);
+        }
+        .mute-btn{ background:linear-gradient(135deg, var(--orange), var(--orange-700)); color:#fff; border:2px solid #fff; width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; z-index:20; transition: transform .2s, box-shadow .2s; }
+        .mute-btn:hover{ transform:scale(1.1); box-shadow:0 4px 12px rgba(245,158,66,.4); }
+        .mute-btn.muted{ background:linear-gradient(135deg, #999, #777); }
+        .mute-btn svg{ width:20px; height:20px; pointer-events:none; }
 
-        /* HOF */
-        .hall-of-fame{background:var(--panel);border-radius:12px;padding:1rem;margin-top:1.5rem;width:100%;max-width:600px}
-        .hall-of-fame-title{color:var(--blue-700);font-weight:800;font-size:1.1rem;text-align:center;margin-bottom:.8rem}
-        .hall-of-fame-table{width:100%;border-collapse:collapse;font-size:.85rem}
-        .hall-of-fame-table th{background:var(--blue-600);color:white;padding:.45rem;text-align:left}
-        .hall-of-fame-table td{padding:.35rem .45rem;border-bottom:1px solid #ddd}
-        .hall-of-fame-table tr:last-child td{border-bottom:none}
-        .hall-of-fame-table tr:nth-child(even){background-color:rgba(255,255,255,.5)}
-        .hall-of-fame-error,.hall-of-fame-loading{padding:1rem;text-align:center;color:var(--blue-700);font-style:italic}
-        .hall-of-fame-error{color:var(--red)}
-        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:none;justify-content:center;align-items:center;z-index:1000}
-        .modal-content{background:white;padding:2rem;border-radius:15px;width:90%;max-width:400px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3)}
-        .modal-input{width:100%;padding:10px;margin:10px 0;border:2px solid #ddd;border-radius:8px;font-size:1rem}
-        .confetti{position:fixed;width:10px;height:10px;border-radius:50%;animation:confetti-fall 3s linear forwards;z-index:999}
-        @keyframes confetti-fall{0%{transform:translate(0,-20px) rotate(0);opacity:1}100%{transform:translate(var(--tx),var(--ty)) rotate(360deg);opacity:0}}
+        /* Pantalla Inicio */
+        .start-content{ display:flex; flex-direction:column; justify-content:center; align-items:center; flex:1; gap:1rem; padding:1rem; }
+        .advice-box{ background:var(--panel); border-left:4px solid var(--blue-700); padding:1rem 1.2rem; border-radius:12px;
+            color:var(--blue-700); max-width:760px; text-align:center; font-size:clamp(1rem,3vw,1.15rem); }
+        .start-image{ max-width: 300px; width: 100%; margin: 0 auto; }
+
+        /* ====== Pantalla Resumen — Conceptos ====== */
+        .summary-wrapper {
+            padding: 0.4rem 0 1rem;
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
+        }
+        .concept-item {
+            border-radius: 14px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border: 1px solid #e8e8e8;
+            transition: box-shadow .25s ease;
+            background: #fff;
+        }
+        .concept-item:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .concept-header {
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: #fff;
+            user-select: none;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        .concept-header-icon {
+            font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+            line-height: 1;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+        }
+        .concept-body {
+            padding: 0.8rem 1.2rem 1rem;
+            font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+            color: #444;
+            line-height: 1.5;
+            background: #fff;
+        }
+
+        /* Colores para conceptos */
+        .concept-1 .concept-header { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); }
+        .concept-2 .concept-header { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
+        .concept-3 .concept-header { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); }
+        .concept-4 .concept-header { background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%); }
+        .concept-5 .concept-header { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); }
+        .concept-6 .concept-header { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); }
+        .concept-7 .concept-header { background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%); }
+        .concept-8 .concept-header { background: linear-gradient(135deg, #e84393 0%, #c2185b 100%); }
+
+        /* Juego 1: Definiciones */
+        .game1-wrapper { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; width: 100%; max-width: 700px; margin: 0 auto; flex: 1; justify-content: flex-start; padding-top: 0.5rem; }
+        .game1-card {
+            background: #fff; border-radius: 18px; padding: 2.2rem 2rem; width: 100%;
+            text-align: center; font-size: clamp(1.25rem, 3.5vw, 1.6rem); color: var(--blue-dark);
+            font-weight: 600; line-height: 1.6; border: 2px solid #e0e0e0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.06);
+            transition: border-color 0.2s, box-shadow 0.2s; position: relative;
+            min-height: 220px; display: flex; align-items: center; justify-content: center;
+        }
+        .game1-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+            background: linear-gradient(90deg, var(--pastel-red), var(--pastel-green), var(--pastel-yellow));
+            border-radius: 18px 18px 0 0;
+        }
+        .game1-card.flash-error { border-color: var(--red); animation: shake 0.3s ease-in-out; }
+        
+        .game1-buttons { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            width: 100%; 
+        }
+        @media (min-width: 600px) {
+            .game1-buttons { grid-template-columns: repeat(4, 1fr); }
+        }
+        
+        .tpl-card {
+            background-color: var(--card-base); color: white; border: 4px solid transparent;
+            border-radius: 10px; padding: 10px 12px; min-height: 80px; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: clamp(0.9rem, 2vw, 1.05rem); text-align: center;
+            cursor: pointer; transition: all 0.2s ease; user-select: none; position: relative; line-height: 1.3;
+            box-shadow: none;
+        }
+        .tpl-card:hover:not(.matched) { transform: scale(1.03); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .tpl-card.matched { background-color: var(--green); border-color: transparent; color: white; animation: pop 0.3s ease; cursor: default; box-shadow: 0 3px 10px rgba(46, 204, 113, 0.35); }
+        .tpl-card.flash-error { animation: shake 0.3s ease-in-out; border-color: var(--red); background-color: var(--red); }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(241, 196, 15, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-5px); }
+            40% { transform: translateX(5px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Pantalla Final */
+        .results{ display:flex; flex-direction:column; align-items:center; gap:.6rem; text-align:center; flex:1; justify-content:center;}
+        .final-title{ color:var(--blue-dark); font-weight:900; }
+        .big-score{ font-size:clamp(2.2rem,6vw,3.4rem); color:var(--blue-600); font-weight:900; }
+        .score-title{ font-size:1.0rem; color:var(--blue-700); margin-top:1rem; }
+        .final-time{ color:var(--blue-700); }
+        
+        #trophyBox { display: none; font-size: clamp(4rem, 10vw, 7rem); margin: .5rem 0; text-align: center; align-self: center; animation: bounce 1s ease infinite; color: var(--orange); line-height: 1; }
+        @keyframes bounce { 0%,100%{ transform: translateY(0) scale(1); } 50%{ transform: translateY(-15px) scale(1.1); } }
+        
+        .credit{ color:var(--blue-700); margin-top:1rem; }
+        #finalMsg { font-size: clamp(1.2rem, 4.2vw, 1.8rem); font-weight: 800; color: var(--blue-700); margin-top: 0.6rem; }
+        .school-logo { display: block; width: 160px; max-width: 28%; height: auto; margin-top: 0.8rem; border-radius: 8px; object-fit: contain; }
+        @media (max-width: 899px) { .school-logo { width: 140px; max-width: 160px; } }
+        @media (max-width: 420px) { .school-logo { width: 110px; max-width: 40%; margin-top: 0.6rem; } }
+
+        /* Hall of Fame */
+        .hall-of-fame { background: var(--panel); border-radius: 12px; padding: 1rem; margin-top: 1.5rem; width: 100%; max-width: 600px; }
+        .hall-of-fame-title { color: var(--blue-700); font-weight: 800; font-size: 1.2rem; text-align: center; margin-bottom: 0.8rem; }
+        .hall-of-fame-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .hall-of-fame-table th { background: var(--blue-600); color: white; padding: 0.5rem; text-align: left; }
+        .hall-of-fame-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #ddd; }
+        .hall-of-fame-table tr:last-child td { border-bottom: none; }
+        .hall-of-fame-table tr:nth-child(even) { background-color: rgba(255,255,255,0.5); }
+        .hall-of-fame-error, .hall-of-fame-loading { padding: 1rem; text-align: center; color: var(--blue-700); font-style: italic; }
+        .hall-of-fame-error { color: var(--red); }
+
+        .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:1000; }
+        .modal-content { background:white; padding:2rem; border-radius:15px; width:90%; max-width:400px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.3); }
+        .modal-input { width:100%; padding:10px; margin:10px 0; border:2px solid #ddd; border-radius:8px; font-size:1rem; }
+        
+        .confetti{ position:fixed; width:10px; height:10px; border-radius:50%; animation: confetti-fall 3s linear forwards; z-index:999; }
+        @keyframes confetti-fall{ 0%{ transform:translate(0, -20px) rotate(0); opacity:1;} 100%{ transform:translate(var(--tx), var(--ty)) rotate(360deg); opacity:0; } }
     </style>
 </head>
 <body>
-<div class="game-container">
+<div class="game-container notranslate">
     <div class="top-controls">
         <div class="lang-pill">
             <button id="langEN" class="active-lang" title="English">🇬🇧</button>
             <button id="langES" title="Español">🇪🇸</button>
         </div>
-        <button class="mute-btn" id="muteBtn" title="Sound">
+        <button class="mute-btn" id="muteBtn" title="Silenciar/Activar sonido">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
         </button>
     </div>
 
-    <!-- START -->
     <section class="screen active" id="startScreen">
         <header>
-            <h1 data-i18n="startTitle">History Concepts</h1>
-            <div class="subtitle" data-i18n="startSubtitle">Learn the key concepts of History.</div>
+            <h1 data-i18n="startTitle">Basic Concepts to Study the Past</h1>
+            <div class="subtitle" data-i18n="startSubtitle">Review these games to learn more about historical concepts.</div>
         </header>
         <div class="start-content">
-            <div class="advice-box"><span data-i18n="startAdvice"></span></div>
+            <div class="advice-box">
+                <span class="advice-text" data-i18n="startAdvice"></span>
+            </div>
             <button class="btn btn-primary" id="startBtn" data-i18n="startBtn">Start</button>
             <img class="start-image" src="https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Ni%C3%B1os.png" alt="Kids learning">
             <div class="hall-of-fame" id="hallOfFame">
-                <div class="hall-of-fame-title">🏆 Mejores puntuaciones 🏆</div>
-                <table class="hall-of-fame-table"><thead><tr><th>Posición</th><th>Nombre</th><th>Puntos</th><th>Tiempo</th></tr></thead><tbody id="hofTableBody"></tbody></table>
+              <div class="hall-of-fame-title">🏆 Mejores puntuaciones 🏆</div>
+              <table class="hall-of-fame-table">
+                  <thead><tr><th>Posición</th><th>Nombre</th><th>Puntos</th><th>Tiempo</th></tr></thead>
+                  <tbody id="hofTableBody"></tbody>
+              </table>
             </div>
         </div>
     </section>
 
-    <!-- GAME 1: ELIMINATION -->
-    <section class="screen" id="g1Screen">
-        <header><h1 data-i18n="g1Title">Who am I?</h1><div class="subtitle" data-i18n="g1Sub">Eliminate the wrong options</div></header>
-        <div class="game-info"><div class="timer" id="timerG1">00:00.0</div><div class="progress-bar"><div class="progress-fill" id="progressG1"></div></div><div class="level-indicator" data-i18n="lvl1">Level 1/2</div></div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;width:100%;padding:.5rem">
-            <div class="g1-def-box" id="g1DefBox"></div>
-            <div class="g1-options" id="g1Options"></div>
+    <section class="screen" id="summaryScreen">
+        <header><h1 data-i18n="summaryTitle">Basic Concepts to Study the Past</h1></header>
+        <div class="summary-wrapper">
+            <div class="concept-item concept-1">
+                <div class="concept-header">
+                    <span class="concept-header-icon">📜</span>
+                    <span data-i18n="cTitle1">History</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody1">Science that studies the past of humanity</div>
+            </div>
+            <div class="concept-item concept-2">
+                <div class="concept-header">
+                    <span class="concept-header-icon">🔍</span>
+                    <span data-i18n="cTitle2">Historical sources</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody2">Remains that provide information from the past</div>
+            </div>
+            <div class="concept-item concept-3">
+                <div class="concept-header">
+                    <span class="concept-header-icon">⏳</span>
+                    <span data-i18n="cTitle3">Chronological order</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody3">Ordering events from oldest to most recent</div>
+            </div>
+            <div class="concept-item concept-4">
+                <div class="concept-header">
+                    <span class="concept-header-icon">📏</span>
+                    <span data-i18n="cTitle4">Timeline</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody4">Representing events on a straight line</div>
+            </div>
+            <div class="concept-item concept-5">
+                <div class="concept-header">
+                    <span class="concept-header-icon">📅</span>
+                    <span data-i18n="cTitle5">Calendar B.C. and A.D.</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody5">Dates before or after Christ</div>
+            </div>
+            <div class="concept-item concept-6">
+                <div class="concept-header">
+                    <span class="concept-header-icon">🌳</span>
+                    <span data-i18n="cTitle6">Family tree</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody6">Graphic representation of a family's kinship</div>
+            </div>
+            <div class="concept-item concept-7">
+                <div class="concept-header">
+                    <span class="concept-header-icon">👥</span>
+                    <span data-i18n="cTitle7">Generation</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody7">People who were born in the same era</div>
+            </div>
+            <div class="concept-item concept-8">
+                <div class="concept-header">
+                    <span class="concept-header-icon">🏛️</span>
+                    <span data-i18n="cTitle8">Heritage</span>
+                </div>
+                <div class="concept-body" data-i18n="cBody8">Sets of material or immaterial goods inherited from the past</div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 1rem;">
+            <button class="btn btn-primary" id="playBtn" data-i18n="playBtn">Play</button>
         </div>
     </section>
 
-    <!-- GAME 2: COLUMN MATCH -->
-    <section class="screen" id="g2Screen">
-        <header><h1 data-i18n="g2Title">Match in Columns</h1></header>
-        <div class="game-info"><div class="timer" id="timerG2">00:00.0</div><div class="progress-bar"><div class="progress-fill" id="progressG2"></div></div><div class="level-indicator" data-i18n="lvl2">Level 2/2</div></div>
-        <div class="g2-grid" id="g2Grid"></div>
+    <section class="screen" id="game1Screen">
+        <header>
+            <h1 data-i18n="game1Title">Basic Historical Concepts</h1>
+            <div class="subtitle" data-i18n="game1Subtitle">Identify which concept the statement refers to.</div>
+        </header>
+        <div class="game-info">
+            <div class="timer" id="timerGame1">00:00.0</div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFillGame1"></div></div>
+            <div class="level-indicator" data-i18n="level1">Level 1/1</div>
+        </div>
+        <div class="game1-wrapper">
+            <div class="game1-card" id="game1Card">
+                <span id="game1Text"></span>
+            </div>
+            <div class="game1-buttons" id="game1Buttons">
+                <!-- Botones generados dinámicamente -->
+            </div>
+        </div>
     </section>
 
-    <!-- GAME 3: GRID MATCH -->
-    <section class="screen" id="g3Screen">
-        <header><h1 data-i18n="g3Title">Match in the Grid</h1></header>
-        <div class="game-info"><div class="timer" id="timerG3">00:00.0</div><div class="progress-bar"><div class="progress-fill" id="progressG3"></div></div><div class="level-indicator" data-i18n="lvl3">Level 2/2</div></div>
-        <div class="g3-grid" id="g3Grid"></div>
-    </section>
-
-    <!-- FINAL -->
     <section class="screen" id="finalScreen">
-        <header><h1 class="final-title" data-i18n="finalTitle">History Concepts</h1></header>
+        <header><h1 class="final-title" data-i18n="finalTitle">Basic Concepts to Study the Past</h1></header>
         <div class="results">
             <div id="trophyBox">🏆</div>
             <div class="score-title" data-i18n="scoreLabel">Score:</div>
             <div class="big-score" id="finalScore">0</div>
             <div class="final-time"><span data-i18n="timeLabel">Time:</span> <span id="finalTime">00:00.0</span></div>
             <div id="finalMsg" class="subtitle"></div>
-            <button class="btn btn-primary" id="backToMenuBtn" data-i18n="backBtn">Back to menu</button>
+            <button class="btn btn-primary" id="backToMenuBtn" style="background:var(--orange);" data-i18n="backBtn">Back to menu</button>
             <span class="credit">Creado por Manuel J. Ventura</span>
-            <img class="school-logo" src="https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Siurot.png" alt="School logo"/>
+            <img class="school-logo" src="https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Siurot.png" alt="School logo" />
         </div>
     </section>
 </div>
@@ -169,7 +393,7 @@
         <p><span data-i18n="modalTime">Your time:</span> <span id="modalTime">00:00.0</span></p>
         <input type="text" id="playerName" class="modal-input" placeholder="Nombre" maxlength="15">
         <input type="text" id="playerSurname" class="modal-input" placeholder="Apellido" maxlength="20">
-        <div style="display:flex;gap:10px;justify-content:center">
+        <div style="display: flex; gap: 10px; justify-content: center;">
             <button id="submitScoreBtn" class="btn btn-primary" data-i18n="modalSave">Save</button>
             <button id="discardScoreBtn" class="btn btn-ghost" data-i18n="modalCancel">Cancel</button>
         </div>
@@ -177,266 +401,525 @@
 </div>
 
 <script>
-const SHEET_NAME="Conceptos";
-const APP_SCRIPT_URL="https://script.google.com/macros/s/AKfycby-VSj-Qgztv3YEItsxoa31GfIE82jgJ6ZRQ0OAiATAsd1qN5b-u4ApPCEF8yhYHRG4OA/exec";
-let soundEnabled=true,isMuted=false,startTime=0,timerInterval=null,elapsed=0,finalTimeVal=0,finalScoreVal=0;
-let totalAttempts=0,currentLang='en',activeGame=null;
+    const SHEET_NAME = "Conceptos";
+    const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby-VSj-Qgztv3YEItsxoa31GfIE82jgJ6ZRQ0OAiATAsd1qN5b-u4ApPCEF8yhYHRG4OA/exec";
+    
+    let soundEnabled = true;
+    let isMuted = false;
+    let audioCtxRef = null;
+    let startTime = 0;
+    let timerInterval = null;
+    let elapsed = 0;
+    let finalTimeVal = 0;
+    let finalScoreVal = 0;
+    const MIN_ATTEMPTS = 8;
+    let totalAttempts = 0;
+    let currentLang = 'en';
 
-const audioUrls={correct:'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Correcto.mp3',error:'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Error.mp3',tap:'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Tap.mp3',victory:'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Termin%C3%A9.mp3',completed:'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Completado.mp3'};
-const audioObjects={};
-Object.keys(audioUrls).forEach(k=>{const a=new Audio();a.src=audioUrls[k];a.preload='auto';audioObjects[k]=a;});
-function sndCorrect(){if(!soundEnabled||isMuted)return;try{audioObjects.correct.currentTime=0;audioObjects.correct.play();}catch(e){}}
-function sndError(){if(!soundEnabled||isMuted)return;try{audioObjects.error.currentTime=0;audioObjects.error.play();}catch(e){}}
-function sndVictory(){if(!soundEnabled||isMuted)return;try{audioObjects.victory.currentTime=0;audioObjects.victory.play();}catch(e){}}
-function sndCompleted(){if(!soundEnabled||isMuted)return;try{audioObjects.completed.currentTime=0;audioObjects.completed.play();}catch(e){}}
-function sndTap(){if(!soundEnabled||isMuted)return;try{audioObjects.tap.currentTime=0;audioObjects.tap.play();}catch(e){}}
-function unlockAudio(){try{const c=new(window.AudioContext||window.webkitAudioContext)();if(c.state==='suspended')c.resume();const s=c.createBufferSource();s.buffer=c.createBuffer(1,1,22050);s.connect(c.destination);s.start();}catch(e){}}
+    let activeGame = null;
 
-/* ===== DATA ===== */
-const data={
-    en:{
-        concepts:[
-            {id:'hist',term:'History',def:'Science that studies the past of humanity'},
-            {id:'fuentes',term:'Historical sources',def:'Remains that provide information about the past'},
-            {id:'crono',term:'Chronological order',def:'Ordering events from oldest to most recent'},
-            {id:'linea',term:'Timeline',def:'Representing events on a straight line'},
-            {id:'calend',term:'Calendar BC and AD',def:'Dates before or after Christ'},
-            {id:'arbol',term:'Family tree',def:'Graphic representation of a family\'s relationships'},
-            {id:'gen',term:'Generation',def:'People born in the same period'},
-            {id:'patrim',term:'Heritage',def:'Set of material or immaterial goods inherited from the past'}
-        ]
-    },
-    es:{
-        concepts:[
-            {id:'hist',term:'Historia',def:'Ciencia que estudia el pasado de la humanidad'},
-            {id:'fuentes',term:'Fuentes históricas',def:'Restos que aportan información del pasado'},
-            {id:'crono',term:'Orden cronológico',def:'Ordenar acontecimientos desde más antiguo a más reciente'},
-            {id:'linea',term:'Línea del tiempo',def:'Representar acontecimientos en una línea recta'},
-            {id:'calend',term:'Calendario a. C. y d. C.',def:'Fechas anteriores o posteriores a Cristo'},
-            {id:'arbol',term:'Árbol genealógico',def:'Representación gráfica de parentesco de una familia'},
-            {id:'gen',term:'Generación',def:'Personas que han nacido en la misma época'},
-            {id:'patrim',term:'Patrimonio',def:'Conjuntos de bienes materiales o inmateriales heredados del pasado'}
-        ]
-    }
-};
-
-/* ===== i18n UI ===== */
-const i18n={
-    en:{
-        startTitle:'History Concepts',startSubtitle:'Learn the key concepts of History.',
-        startAdvice:'Master the basic tools that historians use: <span class="highlight-keyword">Historical sources</span>, <span class="highlight-keyword">Timelines</span>, <span class="highlight-keyword">Chronological order</span> and more.<br><strong style="display:block;margin-top:.5rem">Good luck!</strong>',
-        startBtn:'Start',
-        g1Title:'Who am I?',g1Sub:'Eliminate the wrong options',
-        g2Title:'Match in Columns',g3Title:'Match in the Grid',
-        lvl1:'Level 1/2',lvl2:'Level 2/2',lvl3:'Level 2/2',
-        finalTitle:'History Concepts',scoreLabel:'Score:',timeLabel:'Time:',backBtn:'Back to menu',
-        modalTitle:'Game Over!',modalTime:'Your time:',modalSave:'Save',modalCancel:'Cancel',
-        msgPerfect:'Well done, maximum score!',msgNoPerfect:'Good job! Keep practising'
-    },
-    es:{
-        startTitle:'Conceptos de Historia',startSubtitle:'Aprende los conceptos clave de la Historia.',
-        startAdvice:'Domina las herramientas básicas que usan los historiadores: <span class="highlight-keyword">Fuentes históricas</span>, <span class="highlight-keyword">Líneas del tiempo</span>, <span class="highlight-keyword">Orden cronológico</span> y más.<br><strong style="display:block;margin-top:.5rem">¡Ánimo!</strong>',
-        startBtn:'Comenzar',
-        g1Title:'¿Quién soy?',g1Sub:'Elimina las opciones incorrectas',
-        g2Title:'Empareja en columnas',g3Title:'Empareja en la cuadrícula',
-        lvl1:'Nivel 1/2',lvl2:'Nivel 2/2',lvl3:'Nivel 2/2',
-        finalTitle:'Conceptos de Historia',scoreLabel:'Puntuación:',timeLabel:'Tiempo:',backBtn:'Volver al menú',
-        modalTitle:'¡Juego Terminado!',modalTime:'Tu tiempo:',modalSave:'Guardar',modalCancel:'Cancelar',
-        msgPerfect:'¡Enhorabuena, puntuación máxima!',msgNoPerfect:'¡Buen trabajo! Sigue practicando'
-    }
-};
-
-/* ===== UTILS ===== */
-const svgSoundOn='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
-const svgSoundOff='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
-function toggleSound(){if(isMuted){isMuted=false;soundEnabled=true;document.getElementById('muteBtn').innerHTML=svgSoundOn;document.getElementById('muteBtn').classList.remove('muted');sndTap();}else{isMuted=true;soundEnabled=false;document.getElementById('muteBtn').innerHTML=svgSoundOff;document.getElementById('muteBtn').classList.add('muted');}}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function startTimer(){stopTimer();startTime=Date.now();elapsed=0;timerInterval=setInterval(()=>{elapsed=(Date.now()-startTime)/1000;const t=fmtTime(elapsed);['timerG1','timerG2','timerG3'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=t;});},100);}
-function stopTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null;}}
-function fmtTime(s){const m=Math.floor(s/60).toString().padStart(2,'0');const sec=Math.floor(s%60).toString().padStart(2,'0');const ms=Math.round((s%1)*10);return`${m}:${sec}.${ms}`;}
-function updProgress(id,p){document.getElementById(id).style.width=p+'%';}
-function shuffle(a){let c=a.length,r;while(c!=0){r=Math.floor(Math.random()*c);c--;[a[c],a[r]]=[a[r],a[c]];}return a;}
-function calcScore(){return Math.max(0,Math.round(100-((totalAttempts-16)*(100/16))));}
-
-function applyLanguage(lang){
-    currentLang=lang;document.documentElement.lang=lang;
-    document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(i18n[lang][k]!==undefined)el.innerHTML=i18n[lang][k];});
-    document.getElementById('langEN').classList.toggle('active-lang',lang==='en');
-    document.getElementById('langES').classList.toggle('active-lang',lang==='es');
-    document.title=i18n[lang].startTitle;
-    if(activeGame){const map={g1:initG1,g2:initG2,g3:initG3};if(map[activeGame])map[activeGame]();}
-}
-document.getElementById('langEN').onclick=()=>{sndTap();applyLanguage('en');};
-document.getElementById('langES').onclick=()=>{sndTap();applyLanguage('es');};
-document.getElementById('startBtn').onclick=()=>{sndTap();unlockAudio();totalAttempts=0;startTimer();initG1();};
-document.getElementById('muteBtn').onclick=toggleSound;
-document.getElementById('backToMenuBtn').onclick=()=>{sndTap();location.reload();};
-
-/* ================================================================
-   GAME 1: ELIMINATION
-   ================================================================ */
-let g1Order=[],g1Idx=0;
-function initG1(){
-    activeGame='g1';showScreen('g1Screen');g1Idx=0;updProgress('progressG1',0);
-    g1Order=shuffle([...Array(8).keys()]);
-    loadG1Round();
-}
-function loadG1Round(){
-    if(g1Idx>=8){sndCompleted();setTimeout(initG2,800);return;}
-    const c=data[currentLang].concepts[g1Order[g1Idx]];
-    document.getElementById('g1DefBox').innerHTML=c.def;
-    const box=document.getElementById('g1Options');box.innerHTML='';
-    const ids=shuffle([...Array(8).keys()]);
-    ids.forEach(i=>{
-        const b=document.createElement('div');b.className='g-card';b.dataset.idx=i;
-        b.textContent=data[currentLang].concepts[i].term;
-        b.onclick=()=>handleG1Click(b,g1Order[g1Idx]);
-        box.appendChild(b);
+    const audioUrls = {
+        correct: 'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Correcto.mp3',
+        error: 'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Error.mp3',
+        tap: 'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Tap.mp3',
+        victory: 'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Termin%C3%A9.mp3',
+        completed: 'https://raw.githubusercontent.com/ManuelVS8/Efectos_audio/refs/heads/main/Completado.mp3'
+    };
+    
+    const audioObjects = {};
+    Object.keys(audioUrls).forEach(key => { 
+        const a = new Audio();
+        a.src = audioUrls[key];
+        a.preload = 'auto';
+        audioObjects[key] = a; 
     });
-}
-function handleG1Click(btn,correctIdx){
-    if(btn.classList.contains('eliminated')||btn.classList.contains('correct-reveal'))return;
-    totalAttempts++;
-    if(parseInt(btn.dataset.idx)===correctIdx){
-        sndCorrect();btn.classList.add('correct-reveal');
-        g1Idx++;updProgress('progressG1',(g1Idx/8)*100);
-        setTimeout(loadG1Round,700);
-    }else{
-        sndError();btn.classList.add('flash-error');
-        setTimeout(()=>{btn.classList.remove('flash-error');btn.classList.add('eliminated');},350);
-    }
-}
 
-/* ================================================================
-   GAME 2: COLUMN MATCH
-   ================================================================ */
-let g2Sel=null,g2Matched=0;const TOTAL_PAIRS=8;
-function initG2(){
-    activeGame='g2';showScreen('g2Screen');g2Sel=null;g2Matched=0;updProgress('progressG2',0);
-    const grid=document.getElementById('g2Grid');grid.innerHTML='';
-    const colL=document.createElement('div');colL.className='g2-col';
-    const colR=document.createElement('div');colR.className='g2-col';
-    const terms=shuffle([...Array(8).keys()]);
-    const defs=shuffle([...Array(8).keys()]);
-    terms.forEach(i=>{
-        const c=document.createElement('div');c.className='g-card';
-        c.dataset.pairId=data[currentLang].concepts[i].id;
-        c.dataset.col='left';
-        c.innerHTML=data[currentLang].concepts[i].term;
-        c.onclick=()=>handleG2Click(c);
-        colL.appendChild(c);
-    });
-    defs.forEach(i=>{
-        const c=document.createElement('div');c.className='g-card';
-        c.dataset.pairId=data[currentLang].concepts[i].id;
-        c.dataset.col='right';
-        c.innerHTML=data[currentLang].concepts[i].def;
-        c.onclick=()=>handleG2Click(c);
-        colR.appendChild(c);
-    });
-    grid.appendChild(colL);grid.appendChild(colR);
-}
-function handleG2Click(card){
-    if(card.classList.contains('matched'))return;
-    if(!g2Sel){
-        g2Sel=card;card.classList.add('selected');sndTap();return;
-    }
-    if(g2Sel.dataset.col===card.dataset.col){
-        g2Sel.classList.remove('selected');g2Sel=card;card.classList.add('selected');sndTap();return;
-    }
-    totalAttempts++;
-    if(g2Sel.dataset.pairId===card.dataset.pairId){
-        sndCorrect();
-        g2Sel.classList.remove('selected');g2Sel.classList.add('matched');g2Sel.onclick=null;
-        card.classList.add('matched');card.onclick=null;
-        g2Matched++;updProgress('progressG2',(g2Matched/TOTAL_PAIRS)*100);
-        if(g2Matched===TOTAL_PAIRS){sndCompleted();setTimeout(initG3,800);}
-    }else{
-        sndError();
-        const prev=g2Sel;
-        prev.classList.add('flash-error');card.classList.add('flash-error');
-        setTimeout(()=>{prev.classList.remove('selected','flash-error');card.classList.remove('flash-error');},400);
-    }
-    g2Sel=null;
-}
+    function reproducirSonidoCorrecto() { if (!soundEnabled || isMuted) return; const a = audioObjects['correct']; if(!a) return; try { a.currentTime = 0; a.play(); } catch(e){} }
+    function reproducirSonidoError() { if (!soundEnabled || isMuted) return; const a = audioObjects['error']; if(!a) return; try { a.currentTime = 0; a.play(); } catch(e){} }
+    function reproducirSonidoVictoria() { if (!soundEnabled || isMuted) return; const a = audioObjects['victory']; if(!a) return; try { a.currentTime = 0; a.play(); } catch(e){} }
+    function reproducirSonidoCompletado() { if (!soundEnabled || isMuted) return; const a = audioObjects['completed']; if(!a) return; try { a.currentTime = 0; a.play(); } catch(e){} }
+    function reproducirSonidoTap() { if (!soundEnabled || isMuted) return; const a = audioObjects['tap']; if(!a) return; try { a.currentTime = 0; a.play(); } catch(e){} }
 
-/* ================================================================
-   GAME 3: GRID MATCH
-   ================================================================ */
-let g3Sel=null,g3Matched=0;
-function initG3(){
-    activeGame='g3';showScreen('g3Screen');g3Sel=null;g3Matched=0;updProgress('progressG3',0);
-    const grid=document.getElementById('g3Grid');grid.innerHTML='';
-    const cards=[];
-    data[currentLang].concepts.forEach(c=>{cards.push({pairId:c.id,text:c.term,type:'term'});cards.push({pairId:c.id,text:c.def,type:'def'});});
-    shuffle(cards).forEach(c=>{
-        const el=document.createElement('div');el.className='g-card';
-        el.dataset.pairId=c.pairId;el.dataset.type=c.type;
-        el.innerHTML=c.text;
-        el.onclick=()=>handleG3Click(el);
-        grid.appendChild(el);
-    });
-}
-function handleG3Click(card){
-    if(card.classList.contains('matched'))return;
-    if(!g3Sel){
-        g3Sel=card;card.classList.add('selected');sndTap();return;
+    function unlockAudioContext() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            if (ctx.state === 'suspended') { ctx.resume(); }
+            const buffer = ctx.createBuffer(1, 1, 22050);
+            const source = ctx.createBufferSource();
+            source.buffer = buffer;
+            source.connect(ctx.destination);
+            source.start();
+            audioCtxRef = ctx;
+        } catch(e) {}
     }
-    if(g3Sel.dataset.type===card.dataset.type){
-        g3Sel.classList.remove('selected');g3Sel=card;card.classList.add('selected');sndTap();return;
+
+    let ttsForced = false;
+    function forceInitTTS() {
+        if (ttsForced) return;
+        if (window.speechSynthesis.getVoices().length > 0) { ttsForced = true; return; }
+        const u = new SpeechSynthesisUtterance('');
+        u.volume = 0;
+        window.speechSynthesis.speak(u);
+        ttsForced = true;
     }
-    totalAttempts++;
-    if(g3Sel.dataset.pairId===card.dataset.pairId){
-        sndCorrect();
-        g3Sel.classList.remove('selected');g3Sel.classList.add('matched');g3Sel.onclick=null;
-        card.classList.add('matched');card.onclick=null;
-        g3Matched++;updProgress('progressG3',(g3Matched/TOTAL_PAIRS)*100);
-        if(g3Matched===TOTAL_PAIRS)setTimeout(finishGame,800);
-    }else{
-        sndError();
-        const prev=g3Sel;
-        prev.classList.add('flash-error');card.classList.add('flash-error');
-        setTimeout(()=>{prev.classList.remove('selected','flash-error');card.classList.remove('flash-error');},400);
+
+    if (window.speechSynthesis) {
+        window.speechSynthesis.onvoiceschanged = function() { ttsForced = true; };
     }
-    g3Sel=null;
-}
 
-/* ===== FINAL ===== */
-function finishGame(){
-    activeGame=null;stopTimer();finalTimeVal=elapsed;finalScoreVal=calcScore();
-    document.getElementById('finalScore').textContent=finalScoreVal;document.getElementById('finalTime').textContent=fmtTime(finalTimeVal);
-    const tb=document.getElementById('trophyBox'),msg=document.getElementById('finalMsg'),t=i18n[currentLang];
-    if(finalScoreVal===100){tb.style.display='block';msg.textContent=t.msgPerfect;sndVictory();createConfetti();}
-    else{tb.style.display='none';msg.textContent=t.msgNoPerfect;sndCompleted();}
-    showScreen('finalScreen');showSubmitModal();
-}
-function createConfetti(){for(let i=0;i<100;i++){setTimeout(()=>{const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*window.innerWidth+'px';c.style.top='-10px';c.style.backgroundColor=['#ff595e','#1982c4','#6a4c93','#ffca3a','#8ac926'][Math.floor(Math.random()*5)];c.style.setProperty('--tx',(Math.random()-.5)*200+'px');c.style.setProperty('--ty',window.innerHeight+20+'px');document.body.appendChild(c);setTimeout(()=>c.remove(),3000);},i*20);}}
+    function getBestVoice(lang) {
+        const voices = window.speechSynthesis.getVoices();
+        let v = voices.find(voice => voice.name.includes('Google') && voice.lang.startsWith(lang));
+        if (v) return v;
+        v = voices.find(voice => (voice.name.includes('Microsoft') || voice.name.includes('Natural')) && voice.lang.startsWith(lang));
+        if (v) return v;
+        v = voices.find(voice => voice.lang.startsWith(lang));
+        if (v) return v;
+        return null;
+    }
 
-/* ===== HOF ===== */
-let isHofLoading=false;
-function loadHallOfFame(){
-    if(isHofLoading)return;isHofLoading=true;const tbody=document.getElementById('hofTableBody');
-    tbody.innerHTML='<tr><td colspan="4" class="hall-of-fame-loading">Cargando datos...</td></tr>';
-    const url=`${APP_SCRIPT_URL}?action=read&sheet=${SHEET_NAME}`;
-    const tid=setTimeout(()=>{if(isHofLoading){tbody.innerHTML='<tr><td colspan="4" class="hall-of-fame-error">Error de conexión (Timeout).</td></tr>';isHofLoading=false;}},8000);
-    fetch(url).then(r=>{clearTimeout(tid);if(!r.ok)throw new Error();return r.json();}).then(d=>{
-        if(d.status==='success'&&d.data){
-            const pd=d.data.map(r=>{const g=k=>{for(let x of k){if(r[x]!==undefined&&r[x]!=="")return r[x];}return null;};return{Nombre:g(["Nombre","nombre","name"]),Apellidos:g(["Apellidos","apellidos","surname"]),Puntuación:g(["Puntuación","puntuación","score"]),Tiempo:g(["Tiempo","tiempo","time"])};});
-            const vd=pd.filter(r=>r.Puntuación!==null&&!isNaN(parseFloat(r.Puntuación)));
-            if(!vd.length){tbody.innerHTML='<tr><td colspan="4" class="hall-of-fame-loading">¡Sé el primero en guardar tu puntuación!</td></tr>';}
-            else{vd.sort((a,b)=>(parseFloat(b.Puntuación)||0)-(parseFloat(a.Puntuación)||0)||(parseFloat(a.Tiempo)||9999)-(parseFloat(b.Tiempo)||9999));tbody.innerHTML='';vd.slice(0,10).forEach((it,i)=>{const tr=document.createElement('tr');const dn=`${it.Nombre} ${it.Apellidos}`.trim();let ts=it.Tiempo;if(!isNaN(parseFloat(it.Tiempo)))ts=fmtTime(parseFloat(it.Tiempo));tr.innerHTML=`<td>${i+1}º</td><td>${dn}</td><td>${it.Puntuación||0}</td><td>${ts}</td>`;tbody.appendChild(tr);});}
-        }else{tbody.innerHTML='<tr><td colspan="4" class="hall-of-fame-error">Error de datos.</td></tr>';}
-    }).catch(e=>{clearTimeout(tid);tbody.innerHTML='<tr><td colspan="4" class="hall-of-fame-error">Error de conexión.</td></tr>';}).finally(()=>{isHofLoading=false;});
-}
-function showSubmitModal(){document.getElementById('modalTime').textContent=fmtTime(finalTimeVal);document.getElementById('playerName').value='';document.getElementById('playerSurname').value='';document.getElementById('submitModal').style.display='flex';const b=document.getElementById('submitScoreBtn');b.textContent=i18n[currentLang].modalSave;b.disabled=false;document.getElementById('playerName').focus();}
-function handleSubmitScore(){const b=document.getElementById('submitScoreBtn');const ni=document.getElementById('playerName');const si=document.getElementById('playerSurname');sndTap();const p={score:finalScoreVal,time:finalTimeVal,name:ni.value.trim(),surname:si.value.trim()};
-if(p.name&&p.surname){const ot=b.textContent;b.textContent="Enviando...";b.disabled=true;fetch(APP_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({sheet:SHEET_NAME,action:'write',data:p})}).then(()=>{document.getElementById('submitModal').style.display='none';b.textContent=ot;b.disabled=false;setTimeout(loadHallOfFame,1500);}).catch(e=>{alert("Error al enviar puntuación.");b.textContent=ot;b.disabled=false;});}else{alert("Por favor, rellena nombre y apellido");}}
-document.getElementById('submitScoreBtn').onclick=handleSubmitScore;
-document.getElementById('discardScoreBtn').onclick=()=>{sndTap();document.getElementById('submitModal').style.display='none';};
-document.getElementById('playerName').addEventListener('keypress',e=>{if(e.key==='Enter')document.getElementById('playerSurname').focus();});
-document.getElementById('playerSurname').addEventListener('keypress',e=>{if(e.key==='Enter')handleSubmitScore();});
+    function speakText(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        const lang = currentLang === 'en' ? 'en-GB' : 'es-ES';
+        const voice = getBestVoice(currentLang === 'en' ? 'en' : 'es');
+        if (voice) u.voice = voice;
+        u.lang = lang;
+        u.rate = 0.85;
+        window.speechSynthesis.speak(u);
+    }
 
-document.addEventListener('DOMContentLoaded',()=>{applyLanguage('en');loadHallOfFame();});
+    /* ====== LANGUAGE SYSTEM ====== */
+    const i18n = {
+        en: {
+            startTitle: 'Basic Concepts to Study the Past',
+            startSubtitle: 'Review these games to learn more about historical concepts.',
+            startAdvice: 'Review these basic concepts: <span class="highlight-keyword">history</span>, <span class="highlight-keyword">historical sources</span>, <span class="highlight-keyword">chronological order</span>, <span class="highlight-keyword">timeline</span>, <span class="highlight-keyword">calendar B.C. and A.D.</span>, <span class="highlight-keyword">family tree</span>, <span class="highlight-keyword">generation</span>, and <span class="highlight-keyword">heritage</span>.<br><strong style="display:block; margin-top:0.5rem; text-align: center;">Come on!</strong>',
+            startBtn: 'Start',
+            playBtn: 'Play',
+            summaryTitle: 'Basic Concepts to Study the Past',
+            cTitle1: 'History', cBody1: 'Science that studies the past of humanity',
+            cTitle2: 'Historical sources', cBody2: 'Remains that provide information from the past',
+            cTitle3: 'Chronological order', cBody3: 'Ordering events from oldest to most recent',
+            cTitle4: 'Timeline', cBody4: 'Representing events on a straight line',
+            cTitle5: 'Calendar B.C. and A.D.', cBody5: 'Dates before or after Christ',
+            cTitle6: 'Family tree', cBody6: 'Graphic representation of a family\'s kinship',
+            cTitle7: 'Generation', cBody7: 'People who were born in the same era',
+            cTitle8: 'Heritage', cBody8: 'Sets of material or immaterial goods inherited from the past',
+            game1Title: 'Basic Historical Concepts',
+            game1Subtitle: 'Identify which concept the statement refers to.',
+            level1: 'Level 1/1',
+            finalTitle: 'Basic Concepts to Study the Past',
+            scoreLabel: 'Score:',
+            timeLabel: 'Time:',
+            backBtn: 'Back to menu',
+            modalTitle: 'Game Over!',
+            modalTime: 'Your time:',
+            modalSave: 'Save',
+            modalCancel: 'Cancel',
+            msgPerfect: 'Congratulations, maximum score!',
+            msg80: 'Good job! Keep practising'
+        },
+        es: {
+            startTitle: 'Conceptos básicos para estudiar el pasado',
+            startSubtitle: 'Repasa estos juegos para aprender más sobre conceptos históricos.',
+            startAdvice: 'Repasa estos conceptos básicos: <span class="highlight-keyword">historia</span>, <span class="highlight-keyword">fuentes históricas</span>, <span class="highlight-keyword">orden cronológico</span>, <span class="highlight-keyword">línea del tiempo</span>, <span class="highlight-keyword">calendario a. C. y d. C.</span>, <span class="highlight-keyword">árbol genealógico</span>, <span class="highlight-keyword">generación</span> y <span class="highlight-keyword">patrimonio</span>.<br><strong style="display:block; margin-top:0.5rem; text-align: center;">¡Ánimo!</strong>',
+            startBtn: 'Comenzar',
+            playBtn: 'Jugar',
+            summaryTitle: 'Conceptos básicos para estudiar el pasado',
+            cTitle1: 'Historia', cBody1: 'Ciencia que estudia el pasado de la humanidad',
+            cTitle2: 'Fuentes históricas', cBody2: 'Restos que aportan información del pasado',
+            cTitle3: 'Orden cronológico', cBody3: 'Ordenar acontecimientos desde más antiguo a más reciente',
+            cTitle4: 'Línea del tiempo', cBody4: 'Representar acontecimientos en una línea recta',
+            cTitle5: 'Calendario a. C. y d. C.', cBody5: 'Fechas anteriores o posteriores a Cristo',
+            cTitle6: 'Árbol genealógico', cBody6: 'Representación gráfica de parentesco de una familia',
+            cTitle7: 'Generación', cBody7: 'Personas que han nacido en la misma época',
+            cTitle8: 'Patrimonio', cBody8: 'Conjuntos de bienes materiales o inmateriales heredados del pasado',
+            game1Title: 'Conceptos históricos básicos',
+            game1Subtitle: 'Identifica a qué concepto pertenece la definición.',
+            level1: 'Nivel 1/1',
+            finalTitle: 'Conceptos básicos para estudiar el pasado',
+            scoreLabel: 'Puntuación:',
+            timeLabel: 'Tiempo:',
+            backBtn: 'Volver al menú',
+            modalTitle: '¡Juego Terminado!',
+            modalTime: 'Tu tiempo:',
+            modalSave: 'Guardar',
+            modalCancel: 'Cancelar',
+            msgPerfect: '¡Enhorabuena, puntuación máxima!',
+            msg80: '¡Buen trabajo! Sigue practicando'
+        }
+    };
+
+    function applyLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const text = i18n[lang][key];
+            if (text !== undefined) {
+                el.innerHTML = text;
+            }
+        });
+
+        document.getElementById('langEN').classList.toggle('active-lang', lang === 'en');
+        document.getElementById('langES').classList.toggle('active-lang', lang === 'es');
+        document.title = i18n[lang].startTitle;
+
+        if (activeGame === 'game1' && game1Items.length > 0 && game1CurrentIndex < game1Items.length) {
+            const origIndex = game1OriginalOrder[game1CurrentIndex];
+            const newText = gameDataI18n[lang].definitions[origIndex] ? gameDataI18n[lang].definitions[origIndex].text : game1Items[game1CurrentIndex].text;
+            document.getElementById('game1Text').innerHTML = newText;
+            
+            renderGame1Buttons();
+        }
+    }
+
+    document.getElementById('langEN').onclick = () => { reproducirSonidoTap(); applyLanguage('en'); };
+    document.getElementById('langES').onclick = () => { reproducirSonidoTap(); applyLanguage('es'); };
+
+    /* ====== TRANSLATABLE GAME DATA ====== */
+    const gameDataI18n = {
+        en: {
+            definitions: [
+                { concept: 'history', text: 'Science that studies the past of humanity' },
+                { concept: 'sources', text: 'Remains that provide information from the past' },
+                { concept: 'chronological', text: 'Ordering events from oldest to most recent' },
+                { concept: 'timeline', text: 'Representing events on a straight line' },
+                { concept: 'calendar', text: 'Dates before or after Christ' },
+                { concept: 'familytree', text: 'Graphic representation of a family\'s kinship' },
+                { concept: 'generation', text: 'People who were born in the same era' },
+                { concept: 'heritage', text: 'Sets of material or immaterial goods inherited from the past' }
+            ],
+            concepts: [
+                { concept: 'history', text: 'History' },
+                { concept: 'sources', text: 'Historical sources' },
+                { concept: 'chronological', text: 'Chronological order' },
+                { concept: 'timeline', text: 'Timeline' },
+                { concept: 'calendar', text: 'Calendar B.C. and A.D.' },
+                { concept: 'familytree', text: 'Family tree' },
+                { concept: 'generation', text: 'Generation' },
+                { concept: 'heritage', text: 'Heritage' }
+            ]
+        },
+        es: {
+            definitions: [
+                { concept: 'history', text: 'Ciencia que estudia el pasado de la humanidad' },
+                { concept: 'sources', text: 'Restos que aportan información del pasado' },
+                { concept: 'chronological', text: 'Ordenar acontecimientos desde más antiguo a más reciente' },
+                { concept: 'timeline', text: 'Representar acontecimientos en una línea recta' },
+                { concept: 'calendar', text: 'Fechas anteriores o posteriores a Cristo' },
+                { concept: 'familytree', text: 'Representación gráfica de parentesco de una familia' },
+                { concept: 'generation', text: 'Personas que han nacido en la misma época' },
+                { concept: 'heritage', text: 'Conjuntos de bienes materiales o inmateriales heredados del pasado' }
+            ],
+            concepts: [
+                { concept: 'history', text: 'Historia' },
+                { concept: 'sources', text: 'Fuentes históricas' },
+                { concept: 'chronological', text: 'Orden cronológico' },
+                { concept: 'timeline', text: 'Línea del tiempo' },
+                { concept: 'calendar', text: 'Calendario a. C. y d. C.' },
+                { concept: 'familytree', text: 'Árbol genealógico' },
+                { concept: 'generation', text: 'Generación' },
+                { concept: 'heritage', text: 'Patrimonio' }
+            ]
+        }
+    };
+
+    const svgSoundOn = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
+    const svgSoundOff = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+
+    function toggleSound() {
+        if (isMuted) {
+            isMuted = false; soundEnabled = true;
+            document.getElementById('muteBtn').innerHTML = svgSoundOn;
+            document.getElementById('muteBtn').classList.remove('muted');
+            reproducirSonidoTap();
+        } else {
+            isMuted = true; soundEnabled = false;
+            document.getElementById('muteBtn').innerHTML = svgSoundOff;
+            document.getElementById('muteBtn').classList.add('muted');
+        }
+    }
+
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function startGlobalTimer() {
+        stopTimer();
+        startTime = Date.now();
+        elapsed = 0;
+        timerInterval = setInterval(() => {
+            const delta = (Date.now() - startTime) / 1000;
+            elapsed = delta;
+            const timeStr = formatTime(delta);
+            const el = document.getElementById('timerGame1');
+            if (el) el.textContent = timeStr;
+        }, 100);
+    }
+
+    function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60).toString().padStart(2, '0');
+        const s = Math.floor(sec % 60).toString().padStart(2, '0');
+        const ms = Math.round((sec % 1) * 10);
+        return `${m}:${s}.${ms}`;
+    }
+
+    function updateProgress(id, pct) { document.getElementById(id).style.width = pct + '%'; }
+
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    function calcularPuntuacionFinal() {
+        const score = 100 - ((totalAttempts - MIN_ATTEMPTS) * (100 / MIN_ATTEMPTS));
+        return Math.max(0, Math.round(score));
+    }
+
+    /* ====== INICIO ====== */
+    document.getElementById('startBtn').onclick = () => { 
+        reproducirSonidoTap(); 
+        unlockAudioContext(); 
+        forceInitTTS(); 
+        showScreen('summaryScreen'); 
+        speakText(i18n[currentLang].summaryTitle);
+    };
+    
+    document.getElementById('playBtn').onclick = () => { 
+        reproducirSonidoTap(); totalAttempts = 0; startGlobalTimer();
+        initGame1();
+    };
+
+    /* ====== JUEGO 1: DEFINICIONES ====== */
+    let game1Items = [];
+    let game1OriginalOrder = [];
+    let game1CurrentIndex = 0;
+    const totalItems1 = 8;
+    let game1Locked = false;
+    let game1ButtonOrder = [];
+
+    function initGame1() {
+        activeGame = 'game1';
+        showScreen('game1Screen');
+        game1CurrentIndex = 0;
+        game1Locked = false;
+        updateProgress('progressFillGame1', 0);
+        
+        speakText(i18n[currentLang].game1Title);
+
+        const indices = Array.from({ length: gameDataI18n[currentLang].definitions.length }, (_, i) => i);
+        shuffle(indices);
+        game1OriginalOrder = indices;
+        game1Items = indices.map(i => gameDataI18n[currentLang].definitions[i]);
+
+        const btnIndices = Array.from({ length: gameDataI18n[currentLang].concepts.length }, (_, i) => i);
+        game1ButtonOrder = shuffle(btnIndices);
+
+        loadQuestionGame1();
+    }
+
+    function renderGame1Buttons() {
+        const container = document.getElementById('game1Buttons');
+        container.innerHTML = '';
+        const btnIndices = Array.from({ length: gameDataI18n[currentLang].concepts.length }, (_, i) => i);
+        if(activeGame === 'game1') {
+            shuffle(btnIndices);
+            game1ButtonOrder = btnIndices;
+        } else {
+            btnIndices.sort((a, b) => a - b); // Maintain order if not playing
+        }
+        
+        btnIndices.forEach(origIdx => {
+            const c = gameDataI18n[currentLang].concepts[origIdx];
+            const btn = document.createElement('div');
+            btn.className = 'tpl-card';
+            btn.dataset.concept = c.concept;
+            btn.dataset.origIndex = origIdx;
+            btn.innerHTML = c.text;
+            btn.onclick = () => handleGame1ConceptClick(btn, c.concept);
+            container.appendChild(btn);
+        });
+    }
+
+    function loadQuestionGame1() {
+        game1Locked = false;
+        const origIdx = game1OriginalOrder[game1CurrentIndex];
+        const text = gameDataI18n[currentLang].definitions[origIdx].text;
+        document.getElementById('game1Text').innerHTML = text;
+        document.getElementById('game1Card').classList.remove('flash-error');
+        document.getElementById('game1Buttons').style.display = 'grid';
+        
+        renderGame1Buttons();
+    }
+
+    function handleGame1ConceptClick(btn, concept) {
+        if (game1Locked) return;
+        window.speechSynthesis.cancel();
+        
+        const correctConcept = game1Items[game1CurrentIndex].concept;
+
+        if (concept === correctConcept) {
+            totalAttempts++;
+            reproducirSonidoCorrecto();
+            game1Locked = true;
+            btn.classList.add('matched');
+            
+            game1CurrentIndex++;
+            updateProgress('progressFillGame1', (game1CurrentIndex / totalItems1) * 100);
+            
+            if (game1CurrentIndex < totalItems1) {
+                setTimeout(loadQuestionGame1, 800);
+            } else {
+                setTimeout(finishGame, 800);
+            }
+        } else {
+            totalAttempts++;
+            reproducirSonidoError();
+            btn.classList.add('flash-error');
+            setTimeout(() => {
+                btn.classList.remove('flash-error');
+            }, 300);
+        }
+    }
+
+    /* ====== FINALIZAR ====== */
+    function finishGame() {
+        window.speechSynthesis.cancel();
+        activeGame = null;
+        stopTimer();
+        finalTimeVal = elapsed;
+        finalScoreVal = calcularPuntuacionFinal();
+        document.getElementById('finalScore').textContent = finalScoreVal;
+        document.getElementById('finalTime').textContent = formatTime(finalTimeVal);
+        const trophyBox = document.getElementById('trophyBox');
+        const msg = document.getElementById('finalMsg');
+        const t = i18n[currentLang];
+        
+        if (finalScoreVal === 100) {
+            trophyBox.style.display = 'block'; msg.textContent = t.msgPerfect;
+            reproducirSonidoVictoria(); createConfetti();
+        } else {
+            trophyBox.style.display = 'none'; msg.textContent = t.msg80; reproducirSonidoCompletado();
+        }
+        showScreen('finalScreen');
+        showSubmitModal(finalTimeVal, finalScoreVal);
+    }
+
+    function createConfetti() {
+        for(let i=0;i<100;i++){
+            setTimeout(()=>{
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                const x = Math.random() * window.innerWidth;
+                const tx = (Math.random() - 0.5) * 200;
+                c.style.left = x + 'px'; c.style.top = '-10px';
+                c.style.backgroundColor = ['#ff595e','#1982c4','#6a4c93','#ffca3a','#8ac926'][Math.floor(Math.random()*5)];
+                c.style.setProperty('--tx', tx + 'px');
+                c.style.setProperty('--ty', window.innerHeight + 20 + 'px');
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 3000);
+            }, i * 20);
+        }
+    }
+
+    /* ====== HALL OF FAME ====== */
+    let isHofLoading = false;
+
+    function loadHallOfFame() {
+        if (isHofLoading) return;
+        isHofLoading = true;
+        const tbody = document.getElementById('hofTableBody');
+        tbody.innerHTML = '<tr><td colspan="4" class="hall-of-fame-loading">Cargando datos...</td></tr>';
+        const url = `${APP_SCRIPT_URL}?action=read&sheet=${SHEET_NAME}`;
+        const timeoutId = setTimeout(() => {
+            if(isHofLoading) { tbody.innerHTML = '<tr><td colspan="4" class="hall-of-fame-error">Error de conexión (Timeout).</td></tr>'; isHofLoading = false; }
+        }, 8000);
+        fetch(url)
+            .then(r => { clearTimeout(timeoutId); if(!r.ok) throw new Error("Network response was not ok"); return r.json(); })
+            .then(data => {
+                if (data.status === 'success' && data.data) {
+                    const processedData = data.data.map(row => {
+                        const getVal = (keys) => { for(let key of keys) { if(row[key] !== undefined && row[key] !== "") return row[key]; } return null; };
+                        return { Nombre: getVal(["Nombre", "nombre", "name"]), Apellidos: getVal(["Apellidos", "apellidos", "surname"]), Puntuación: getVal(["Puntuación", "puntuación", "score"]), Tiempo: getVal(["Tiempo", "tiempo", "time"]) };
+                    });
+                    const validData = processedData.filter(row => row.Puntuación !== null && !isNaN(parseFloat(row.Puntuación)));
+                    if (validData.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" class="hall-of-fame-loading">¡Sé el primero en guardar tu puntuación!</td></tr>';
+                    } else {
+                        validData.sort((a, b) => {
+                            const scoreA = parseFloat(a.Puntuación) || 0; const scoreB = parseFloat(b.Puntuación) || 0;
+                            if (scoreB !== scoreA) return scoreB - scoreA;
+                            const timeA = parseFloat(a.Tiempo) || 9999; const timeB = parseFloat(b.Tiempo) || 9999;
+                            return timeA - timeB;
+                        });
+                        tbody.innerHTML = '';
+                        const top10 = validData.slice(0, 10);
+                        for (let i = 0; i < top10.length; i++) {
+                            const item = top10[i];
+                            const tr = document.createElement('tr');
+                            const displayName = `${item.Nombre} ${item.Apellidos}`.trim();
+                            let timeStr = item.Tiempo;
+                            if (!isNaN(parseFloat(item.Tiempo))) { timeStr = formatTime(parseFloat(item.Tiempo)); }
+                            const points = item.Puntuación || 0;
+                            tr.innerHTML = `<td>${i + 1}º</td><td>${displayName}</td><td>${points}</td><td>${timeStr}</td>`;
+                            tbody.appendChild(tr);
+                        }
+                    }
+                } else { tbody.innerHTML = '<tr><td colspan="4" class="hall-of-fame-error">Error de datos.</td></tr>'; }
+            })
+            .catch(e => { clearTimeout(timeoutId); console.error("Error HoF:", e); tbody.innerHTML = '<tr><td colspan="4" class="hall-of-fame-error">Error de conexión.</td></tr>'; })
+            .finally(() => { isHofLoading = false; });
+    }
+
+    function showSubmitModal(time, score) {
+        document.getElementById('modalTime').textContent = formatTime(time);
+        document.getElementById('playerName').value = '';
+        document.getElementById('playerSurname').value = '';
+        document.getElementById('submitModal').style.display = 'flex';
+        const btn = document.getElementById('submitScoreBtn');
+        btn.textContent = i18n[currentLang].modalSave; btn.disabled = false;
+        document.getElementById('playerName').focus();
+    }
+
+    function handleSubmitScore() {
+        const btn = document.getElementById('submitScoreBtn');
+        const nameInput = document.getElementById('playerName');
+        const surnameInput = document.getElementById('playerSurname');
+        reproducirSonidoTap();
+        const payload = { score: finalScoreVal, time: finalTimeVal, name: nameInput.value.trim(), surname: surnameInput.value.trim() };
+        if(payload.name && payload.surname) {
+            const originalText = btn.textContent;
+            btn.textContent = "Enviando..."; btn.disabled = true;
+            fetch(APP_SCRIPT_URL, {
+                method: 'POST', mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ sheet: SHEET_NAME, action: 'write', data: payload })
+            })
+            .then(() => { document.getElementById('submitModal').style.display = 'none'; btn.textContent = originalText; btn.disabled = false; setTimeout(loadHallOfFame, 1500); })
+            .catch(e => { console.error("Error envío:", e); alert("Error al enviar puntuación."); btn.textContent = originalText; btn.disabled = false; });
+        } else { alert("Por favor, rellena nombre y apellido"); }
+    }
+
+    document.getElementById('submitScoreBtn').onclick = handleSubmitScore;
+    document.getElementById('discardScoreBtn').onclick = () => { reproducirSonidoTap(); document.getElementById('submitModal').style.display = 'none'; };
+    document.getElementById('playerName').addEventListener('keypress', function (e) { if (e.key === 'Enter') { document.getElementById('playerSurname').focus(); } });
+    document.getElementById('playerSurname').addEventListener('keypress', function (e) { if (e.key === 'Enter') { handleSubmitScore(); } });
+    document.getElementById('backToMenuBtn').onclick = () => { reproducirSonidoTap(); location.reload(); };
+    document.getElementById('muteBtn').onclick = toggleSound;
+
+    document.addEventListener('DOMContentLoaded', () => { applyLanguage('en'); loadHallOfFame(); });
 </script>
 </body>
 </html>
